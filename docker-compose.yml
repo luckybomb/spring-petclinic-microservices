@@ -1,14 +1,14 @@
 version: '2'
 services:
   config-server:
-    image: mszarlinski/spring-petclinic-config-server
+    image: neo/spring-petclinic-config-server
     container_name: config-server
     mem_limit: 256M
     ports:
      - 8888:8888
 
   discovery-server:
-    image: mszarlinski/spring-petclinic-discovery-server
+    image: neo/spring-petclinic-discovery-server
     container_name: discovery-server
     mem_limit: 256M
     links:
@@ -20,7 +20,7 @@ services:
      - 8761:8761
 
   customers-service:
-    image: mszarlinski/spring-petclinic-customers-service
+    image: neo/spring-petclinic-customers-service
     container_name: customers-service
     mem_limit: 256M
     links:
@@ -30,12 +30,13 @@ services:
     depends_on:
      - config-server
      - discovery-server
+#    entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=60","--","java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-javaagent:/neo/neo-0.1.27/neo.agent.jar", "-Dservice_key=15f8e587-a38e-4fd7-9db3-c582f7edecd5", "-Dapplication_name=customers-service", "-Dapm.env=dev", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
     entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=60","--","java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
     ports:
     - 8081:8081
 
   visits-service:
-    image: mszarlinski/spring-petclinic-visits-service
+    image: neo/spring-petclinic-visits-service
     container_name: visits-service
     mem_limit: 256M
     links:
@@ -45,12 +46,13 @@ services:
     depends_on:
      - config-server
      - discovery-server
+#    entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=60","--","java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-javaagent:/neo/neo-0.1.27/neo.agent.jar", "-Dservice_key=15f8e587-a38e-4fd7-9db3-c582f7edecd5", "-Dapplication_name=visits-service", "-Dapm.env=dev", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
     entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=60","--","java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
     ports:
      - 8082:8082
 
   vets-service:
-    image: mszarlinski/spring-petclinic-vets-service
+    image: neo/spring-petclinic-vets-service
     container_name: vets-service
     mem_limit: 256M
     links:
@@ -60,12 +62,13 @@ services:
     depends_on:
      - config-server
      - discovery-server
+#    entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=60","--","java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-javaagent:/neo/neo-0.1.27/neo.agent.jar", "-Dservice_key=15f8e587-a38e-4fd7-9db3-c582f7edecd5", "-Dapplication_name=vets-service", "-Dapm.env=dev", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
     entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=60","--","java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
     ports:
      - 8083:8083
 
   api-gateway:
-    image: mszarlinski/spring-petclinic-api-gateway
+    image: neo/spring-petclinic-api-gateway
     container_name: api-gateway
     mem_limit: 256M
     links:
@@ -78,12 +81,13 @@ services:
     depends_on:
      - config-server
      - discovery-server
+#    entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=60","--","java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-javaagent:/neo/neo-0.1.27/neo.agent.jar", "-Dservice_key=15f8e587-a38e-4fd7-9db3-c582f7edecd5", "-Dapplication_name=api-gateway", "-Dapm.env=dev", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
     entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=60","--","java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
     ports:
      - 8080:8080
 
   tracing-server:
-    image: mszarlinski/spring-petclinic-tracing-server
+    image: neo/spring-petclinic-tracing-server
     container_name: tracing-server
     mem_limit: 256M
     links:
@@ -97,7 +101,7 @@ services:
      - 9411:9411
 
   admin-server:
-    image: mszarlinski/spring-petclinic-admin-server
+    image: neo/spring-petclinic-admin-server
     container_name: admin-server
     mem_limit: 256M
     links:

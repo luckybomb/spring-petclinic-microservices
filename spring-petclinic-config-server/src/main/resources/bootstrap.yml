@@ -13,3 +13,11 @@ spring:
       server:
         git:
           uri: file:///${GIT_REPO}
+---
+spring:
+  profiles: krane
+  cloud:
+    config:
+      server:
+        git:
+          uri: file:////kakao/service/spring-petclinic-microservice-config

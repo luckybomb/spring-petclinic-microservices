@@ -4,9 +4,20 @@ spring:
       uri: http://localhost:8888
   application:
     name: tracing-server
+management:
+  metrics:
+    web:
+      server:
+        auto-time-requests: false
 ---
 spring:
   profiles: docker
   cloud:
     config:
       uri: http://config-server:8888
+---
+spring:
+  profiles: krane
+  cloud:
+    config:
+      uri: http://pet-config-server.pg1.krane.9rum.cc:8888
